@@ -2,6 +2,17 @@
 <p>【メールアドレス】 <%= @post.user.email %></p>
 <p>【内容】 <%= @post.content %></p>
 <p>【作成日時】 <%= l @post.created_at %></p>
+<!-- ***** 以下を追加 ***** -->
+<p id="post-<%= @post.id %>">
+  <% if @post.liked_by?(current_user) %>
+    <%# 「いいね！」済み %>
+   <%= render "like", post: @post %>
+  <% else %>
+    <%# 「いいね」していない %>
+   <%= render "dislike", post: @post %>
+  <% end %>
+</p>
+<!-- ***** 以上を追加 ***** -->
 <% if current_user.id == @post.user_id %>
   <p>
     <%= link_to "編集", edit_post_path(@post) %>
